@@ -774,6 +774,7 @@ export const {
 
 ![alt Public](/img/NotesList.JPG)
 
+
 ## VI. Chapter 7: React & Redux Forms
 
 
