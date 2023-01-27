@@ -504,7 +504,7 @@ module.exports = {
     \---img
             background.jpg    
 ```
-First thing first, install [react-router-dom ](https://www.npmjs.com/package/react-router-dom) to enable [client side routing](https://reactrouter.com/en/main/start/overview). 
+First thing first, install [react-router-dom](https://www.npmjs.com/package/react-router-dom) to enable [client side routing](https://reactrouter.com/en/main/start/overview). 
 
 > Client side routing allows your app to update the URL from a link click without making another request for another document from the server. Instead, your app can immediately render some new UI and make data requests with fetch to update the page with new information.
 
@@ -529,8 +529,7 @@ root.render(
   </React.StrictMode>
 );
 ```
-
-Which routes all traffics to: 
+Which practically redirects all traffics to our &lt;App /&gt; component. 
 
 App.js
 ```javascript
@@ -571,14 +570,14 @@ function App() {
 
 export default App;
 ```
+Which setup routes to various components, ie: 
 
-Which routes to corresponding components: 
 ```
-localhost:3000/         => Public
-localhost:3000/login    => Login
-localhost:3000/dash     => Welcome 
-localhost:3000/dash/users   => NoteList
-localhost:3000/dash/notes   => UserList
+localhost:3000/         => <Public />
+localhost:3000/login    => <Login />
+localhost:3000/dash     => <Welcome /> 
+localhost:3000/dash/users   => <NotesList />
+localhost:3000/dash/notes   => <UsersList />
 ```
 And these completes the basics of client side routing. 
 
@@ -613,6 +612,7 @@ const Public = () => {
 }
 export default Public
 ```
+![alt Public](/img/Public.JPG)
 
 features/auth/Welcome.js
 ```jsx 
@@ -641,6 +641,8 @@ const Welcome = () => {
 }
 export default Welcome
 ```
+![alt Welcome](/img/Welcome.JPG)
+
 These are the basic structure and layout of our React client. 
 
 
@@ -768,6 +770,9 @@ export const {
 } = usersAdapter.getSelectors(state => selectUsersData(state) ?? initialState)
 ```
 
+![alt UserList](/img/UsersList.JPG)
+
+![alt Public](/img/NotesList.JPG)
 
 ## VI. Chapter 7: React & Redux Forms
 
