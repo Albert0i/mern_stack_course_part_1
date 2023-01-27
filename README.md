@@ -1,6 +1,8 @@
 # "Re-visiting MERN stack (Part One)"
 
+
 [![alt William Wilson](img/vlcsnap-2023-01-27-09h09m44s464.png)](https://youtu.be/JSy8m5HdlnE)
+
 
 ## Prologue
 This [MERN](https://www.mongodb.com/mern-stack) project is made up of 13 tutorials that builds upon each other much like chapters of a book. 
@@ -171,6 +173,7 @@ Only JSON and XML data are present in Web API unlike MVC where return views, act
         index.html
 ```
 
+
 ### Models 
 Packages [dotenv](https://www.npmjs.com/package/dotenv), [mongoose](https://www.npmjs.com/package/mongoose), [mongoose-sequence](https://www.npmjs.com/package/mongoose-sequence) are required. 
 
@@ -297,6 +300,7 @@ mongoose.connection.on('error', err => {
     logEvents(`${err.no}: ${err.code}\t${err.syscall}\t${err.hostname}`, 'mongoErrLog.log')
 })
 ```
+
 
 ### Controllers 
 Packages [express-async-handler](https://www.npmjs.com/package/express-async-handler) and [bcrypt](https://www.npmjs.com/package/bcrypt) are required. 
@@ -637,18 +641,146 @@ const Welcome = () => {
 }
 export default Welcome
 ```
+These are the basic structure and layout of our React client. 
 
 
 ## V. Chapter 6: Redux & RTK Query
+To install [Redux Toolkit](https://redux-toolkit.js.org/) via 
+```bash
+npm install @reduxjs/toolkit react-redux
+```
+> **Redux is a pattern and library for managing and updating application state, using events called "actions".** It serves as a centralized store for state that needs to be used across your entire application, with rules ensuring that the state can only be updated in a predictable fashion.
+
+> RTK Query is an optional addon included in the Redux Toolkit package, and its functionality is built on top of the other APIs in Redux Toolkit.
+
+app/api/apiSlice.js
+```javascript
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+
+export const apiSlice = createApi({
+    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3500' }),
+    tagTypes: ['Note', 'User'],
+    endpoints: builder => ({})
+})
+```
+Which defines our base URL pointing to our development server, tagTypes will be used to cache data, so we can invalidate them as needed. Notice that no endpoints has yet defined. We are going to provide extended slice and attached the endpoints for notes and users. And that will be the actual endpoints. 
+
+app/store.js
+```javascript
+import { configureStore } from "@reduxjs/toolkit";
+import { apiSlice } from './api/apiSlice';
+
+export const store = configureStore({
+    reducer: {
+        [apiSlice.reducerPath]: apiSlice.reducer,
+    },
+    middleware: getDefaultMiddleware =>
+        getDefaultMiddleware().concat(apiSlice.middleware),
+    devTools: true
+})
+```
+To create a store, reducer and middleware are provided. 
+
+index.js
+```javascript
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+import { store } from './app/store'
+import { Provider } from 'react-redux'
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/*" element={<App />} />
+        </Routes>
+      </BrowserRouter>
+    </Provider>
+  </React.StrictMode>
+);
+```
+Wrap everything within `<Provider store={store}>`, which effectively provides our store to the application. 
+
+features/users/usersApiSlice.js
+```javascript
+import {
+    createSelector,
+    createEntityAdapter
+} from "@reduxjs/toolkit";
+import { apiSlice } from "../../app/api/apiSlice"
+
+const usersAdapter = createEntityAdapter({})
+
+const initialState = usersAdapter.getInitialState()
+
+export const usersApiSlice = apiSlice.injectEndpoints({
+    endpoints: builder => ({
+        getUsers: builder.query({
+            query: () => '/users',
+            validateStatus: (response, result) => {
+                return response.status === 200 && !result.isError
+            },
+            keepUnusedDataFor: 5,
+            transformResponse: responseData => {
+                const loadedUsers = responseData.map(user => {
+                    user.id = user._id
+                    return user
+                });
+                return usersAdapter.setAll(initialState, loadedUsers)
+            },
+            providesTags: (result, error, arg) => {
+                if (result?.ids) {
+                    return [
+                        { type: 'User', id: 'LIST' },
+                        ...result.ids.map(id => ({ type: 'User', id }))
+                    ]
+                } else return [{ type: 'User', id: 'LIST' }]
+            }
+        }),
+    }),
+})
+
+export const {
+    useGetUsersQuery,
+} = usersApiSlice
+
+// returns the query result object
+export const selectUsersResult = usersApiSlice.endpoints.getUsers.select()
+
+// creates memoized selector
+const selectUsersData = createSelector(
+    selectUsersResult,
+    usersResult => usersResult.data // normalized state object with ids & entities
+)
+
+//getSelectors creates these selectors and we rename them with aliases using destructuring
+export const {
+    selectAll: selectAllUsers,
+    selectById: selectUserById,
+    selectIds: selectUserIds
+    // Pass in a selector that returns the users slice of state
+} = usersAdapter.getSelectors(state => selectUsersData(state) ?? initialState)
+```
+
 
 ## VI. Chapter 7: React & Redux Forms
 
+
 ## VII. Intermission  
-Working on both backend and frontend at the same time can be a challenging task.  
+Working on both backend and frontend at the same time can be a challenging task. 
+
 
 ## VIII. Reference
 1. [MERN Stack Full Tutorial & Project | Complete All-in-One Course | 8 Hours](https://youtu.be/CvCiNeLnZ00)
 2. [React Router Tutorial](https://reactrouter.com/en/main/start/tutorial)
+3. [React Redux Full Course for Beginners | Redux Toolkit Complete Tutorial](https://youtu.be/NqzdVN2tyvQ)
+4. [RTK Query Overview](https://redux-toolkit.js.org/rtk-query/overview)
 12. [William Wilson. A Tale.](https://poemuseum.org/william-wilson/)
 
 
