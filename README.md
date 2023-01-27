@@ -644,6 +644,7 @@ export default Welcome
 ## VI. Chapter 7: React & Redux Forms
 
 ## VII. Intermission  
+Working on both backend and frontend at the same time can be a challenging task.  
 
 ## VIII. Reference
 1. [MERN Stack Full Tutorial & Project | Complete All-in-One Course | 8 Hours](https://youtu.be/CvCiNeLnZ00)
