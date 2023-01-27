@@ -1,0 +1,100 @@
+### Get all users
+GET http://localhost:3500/users
+
+
+### Create a user 
+POST http://localhost:3500/users
+Content-Type: application/json
+
+{
+  "username": "Hank",
+  "password": "12345",
+  "roles": ["Employee", "Manager", "Admin"]
+}
+
+
+### Create another user
+POST http://localhost:3500/users
+Content-Type: application/json
+
+{
+  "username": "Dave",
+  "password": "12345",
+  "roles": ["Employee"]
+}
+
+
+### Update a user
+PATCH http://localhost:3500/users
+Content-Type: application/json
+
+{
+    "id": "63d1f91efe7134585e557aa6",
+    "username": "Dave",
+    "roles": [
+      "Employee"
+    ],
+    "active": true
+}
+
+
+### Delete a user 
+DELETE http://localhost:3500/users
+Content-Type: application/json
+
+{
+    "id": "63d1f91efe7134585e557aa6",
+    "username": "Dave",
+    "roles": [
+      "Employee"
+    ],
+    "active": true
+}
+
+########## ########## ########## ##########
+
+### Get all notes
+GET http://localhost:3500/notes
+
+
+### Create a note
+POST http://localhost:3500/notes
+Content-Type: application/json
+
+{
+  "user": "63d1f91efe7134585e557aa6",
+  "title": "Bread and Butter",
+  "text": "That's better..."
+}
+
+
+### Update a note
+PATCH http://localhost:3500/notes
+Content-Type: application/json
+
+{
+  "id": "63d1fa26fe7134585e557ab0",
+  "user": "63d1f91efe7134585e557aa6",
+  "title": "Waiting for Godot",
+  "text": "All those moments will be lost in time, like [coughs] tears in rain. Time to die.",
+  "completed": true
+}
+
+
+### Delete a note 
+DELETE http://localhost:3500/notes
+Content-Type: application/json
+
+{
+    "id": "63d1fb12fe7134585e557ac4",
+    "user": "63d1f91efe7134585e557aa6",
+    "title": "Bread and Butter",
+    "text": "That's better...",
+    "completed": false
+}
+
+
+# 
+# REST Client for Visual Studio Code
+# https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+#

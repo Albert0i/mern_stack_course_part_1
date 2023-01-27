@@ -1,5 +1,6 @@
 # "Re-visiting MERN stack (Part One)"
 
+[![alt William Wilson](img/vlcsnap-2023-01-27-09h09m44s464.png)](https://youtu.be/JSy8m5HdlnE)
 
 ## Prologue
 This [MERN](https://www.mongodb.com/mern-stack) project is made up of 13 tutorials that builds upon each other much like chapters of a book. 
@@ -647,11 +648,11 @@ export default Welcome
 ## VIII. Reference
 1. [MERN Stack Full Tutorial & Project | Complete All-in-One Course | 8 Hours](https://youtu.be/CvCiNeLnZ00)
 2. [React Router Tutorial](https://reactrouter.com/en/main/start/tutorial)
-12. [William Morris Quotes](https://www.laurasbeau.co.uk/william-morris-quotes-2/)
+12. [William Wilson. A Tale.](https://poemuseum.org/william-wilson/)
 
 
 ## Epilogue 
 <span style="font-size: 36px; font-weight: bold;">A</span>fter wandering for hours, my head was tumultuously flooding with remembrance. Wild and furious shriek resound violently inside my brain. Faint and dizzy as i was, weary and shabby as i was, I stumbled back to my lodging, being hungry and thirst, laying consciously on the couch and asked "what have I done?", "what shall I do?"... Have you ever hunger for something? I meant those metaphysical desire that you have ever dreamed on or even intended to pursuit, no matter whatsoever ends up... Exactly at that moment, I realize what I can do...  
 
 
-## EOF (2023/01/27)"# mern_stack_course_part_1" 
+## EOF (2023/01/27)
