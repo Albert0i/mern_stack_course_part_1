@@ -781,6 +781,8 @@ Working on both backend and frontend at the same time can be a challenging task.
 2. [React Router Tutorial](https://reactrouter.com/en/main/start/tutorial)
 3. [React Redux Full Course for Beginners | Redux Toolkit Complete Tutorial](https://youtu.be/NqzdVN2tyvQ)
 4. [RTK Query Overview](https://redux-toolkit.js.org/rtk-query/overview)
+5. [Normalizing State Shape](https://redux.js.org/usage/structuring-reducers/normalizing-state-shape)
+6. [createEntityAdapter](https://redux-toolkit.js.org/api/createEntityAdapter)
 12. [William Wilson. A Tale.](https://poemuseum.org/william-wilson/)
 
 
