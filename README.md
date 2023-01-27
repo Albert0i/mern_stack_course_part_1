@@ -529,7 +529,7 @@ root.render(
   </React.StrictMode>
 );
 ```
-Which practically redirects all traffics to our &lt;App /&gt; component. 
+Which practically redirects all traffics to our `<App />` component. 
 
 App.js
 ```javascript
