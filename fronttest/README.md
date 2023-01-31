@@ -101,7 +101,7 @@ export default Data
 
 Please check [API Slices: React Hooks](https://redux-toolkit.js.org/rtk-query/api/created-api/hooks#usequery) for more. 
 
-Provide the Api to our `App` so that our `Data` component can work. 
+Don't forget to provide the Api to our `App`.
 
 App.js
 ```javascript
@@ -153,6 +153,8 @@ function compare( a, b ) {
     return 0;
 }
 ```
+
+![alt Data1](https://raw.githubusercontent.com/Albert0i/mern_stack_course_part_1/main/img/Data1.JPG)
 
 
 ## IV. [Normalizing Data](https://redux.js.org/tutorials/essentials/part-6-performance-normalization)
@@ -231,13 +233,60 @@ const Data = () => {
 export default Data
 ```
 
-## V. Summary 
+![alt Data3](https://raw.githubusercontent.com/Albert0i/mern_stack_course_part_1/main/img/Data3.JPG)
+
+
+## V. By the store
+if your project already has a store, you may first add the Api to store. 
+
+store.js
+```javascript
+import { configureStore } from "@reduxjs/toolkit";
+import { usersApi } from '../features/apiSlice';
+import { setupListeners } from '@reduxjs/toolkit/query';
+
+export const store = configureStore({
+    reducer: {
+        [usersApi.reducerPath]: usersApi.reducer
+    },
+    middleware: getDefaultMiddleware =>
+        getDefaultMiddleware().concat(usersApi.middleware),
+    devTools: true
+})
+
+setupListeners(store.dispatch);
+```
+
+Then provide the store to your app: 
+
+App.js
+```javascript
+import './App.css';
+import { Provider } from 'react-redux'
+import { store } from './app/store'
+import Data from './components/Data3'
+
+function App() {
+  return (
+    <Provider store={ store }>
+      <Data />
+    </Provider>    
+  );
+}
+
+export default App;
+```
+
+That archieves the same result. 
+
+
+## VI. Summary 
 There is much more we can do with RTK Query, if you are not Redux fans and alreay use some other fetching libraries in your project. It's probably not worth investing on RTK Query. 
 
 But if you already have redux package installed, RTK Query is in your tool chest, it doesn't hurt to give a try...
 
 
-## VI. Reference
+## VII. Reference
 1. [RTK Query Tutorial - How to Fetch Data With Redux Toolkit Query | React Beginners Tutorial](https://youtu.be/-8WEd578fFw)
 2. [React Redux RTK QUERY CRASH COURSE | Build Product Search Functionality](https://youtu.be/7KkNZffq21Y)
 3. [Redux Toolkit | createApi](https://redux-toolkit.js.org/rtk-query/api/createApi)
