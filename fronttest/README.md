@@ -237,7 +237,7 @@ export default Data
 
 
 ## V. By the store
-if your project already has a store, you may first add the Api to store. 
+if your have already setup your [store](https://redux.js.org/usage/configuring-your-store), just attach the Api to the reducer. In addition, we need to setup the `middleware`, and call `setupListeners` in the last part.
 
 store.js
 ```javascript
@@ -257,7 +257,7 @@ export const store = configureStore({
 setupListeners(store.dispatch);
 ```
 
-Then provide the store to your app: 
+Provides the store to ypur app as usual. 
 
 App.js
 ```javascript
