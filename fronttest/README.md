@@ -101,6 +101,26 @@ export default Data
 
 Please check [API Slices: React Hooks](https://redux-toolkit.js.org/rtk-query/api/created-api/hooks#usequery) for more. 
 
+Provide the Api to our `App` so that our `Data` component can work. 
+
+App.js
+```javascript
+import './App.css';
+import { ApiProvider } from '@reduxjs/toolkit/query/react'
+import { usersApi } from './features/apiSlice1';
+import Data from './components/Data'
+
+function App() {
+  return (
+    <ApiProvider api={ usersApi }>
+      <Data />
+    </ApiProvider>    
+  );
+}
+
+export default App;
+```
+
 
 ## III. [Customizing queries](https://redux-toolkit.js.org/rtk-query/usage/customizing-queries)
 In some cases, you may want to manipulate the data returned from a query before you put it in the cache. In this instance, you can take advantage of `transformResponse`.
