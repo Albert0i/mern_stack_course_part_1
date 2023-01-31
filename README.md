@@ -646,7 +646,10 @@ export default Welcome
 These are the basic structure and layout of our React client. 
 
 
-## V. Chapter 6: Redux & RTK Query
+## V. Appendage: [The ABC of RTK Query](https://github.com/Albert0i/mern_stack_course_part_1/tree/main/fronttest#vii-reference)
+
+
+## VI. Chapter 6: Redux & RTK Query
 To install [Redux Toolkit](https://redux-toolkit.js.org/) via 
 ```bash
 npm install @reduxjs/toolkit react-redux
@@ -775,14 +778,14 @@ export const {
 ![alt Public](/img/NotesList.JPG)
 
 
-## VI. Chapter 7: React & Redux Forms
+## VII. Chapter 7: React & Redux Forms
 
 
-## VII. Intermission  
+## VIII. Intermission  
 Working on both backend and frontend at the same time can be a challenging task. 
 
 
-## VIII. Reference
+## IX. Reference
 1. [MERN Stack Full Tutorial & Project | Complete All-in-One Course | 8 Hours](https://youtu.be/CvCiNeLnZ00)
 2. [React Router Tutorial](https://reactrouter.com/en/main/start/tutorial)
 3. [React Redux Full Course for Beginners | Redux Toolkit Complete Tutorial](https://youtu.be/NqzdVN2tyvQ)
@@ -796,4 +799,4 @@ Working on both backend and frontend at the same time can be a challenging task.
 <span style="font-size: 36px; font-weight: bold;">A</span>fter wandering for hours, my head was tumultuously flooding with remembrance. Wild and furious shriek resound violently inside my brain. Faint and dizzy as i was, weary and shabby as i was, I stumbled back to my lodging, being hungry and thirst, laying consciously on the couch and asked "what have I done?", "what shall I do?"... Have you ever hunger for something? I meant those metaphysical desire that you have ever dreamed on or even intended to pursuit, no matter whatsoever ends up... Exactly at that moment, I realize what I can do...  
 
 
-## EOF (2023/01/27)
+## EOF (2023/02/03)
