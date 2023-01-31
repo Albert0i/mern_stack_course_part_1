@@ -177,7 +177,7 @@ Fill data into adapter:
 . . . 
 ```
 
-The return data is an object
+The return data is an object. 
 
 components/Data.js
 ```javascript
