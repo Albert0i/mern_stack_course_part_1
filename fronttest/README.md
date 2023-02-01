@@ -43,7 +43,57 @@ First of all, create `apiSlice.js` and import `createApi` and `fetchBaseQuery` i
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 ```
 
-We are going to create a API to fetch a list of users from the backend and then export it, so that we can access it from other files. 
+We are going to create a API to fetch a list of users from the backend:
+
+```
+http://localhost:3500/users
+```
+
+Output: 
+```
+[
+  { 
+    "_id":"63d1f458fe7134585e557a86",
+    "username":"Hank",
+    "roles":["Employee","Manager","Admin"],
+    "active":true,
+    "createdAt":"2023-01-26T03:32:40.223Z",
+    "updatedAt":"2023-01-26T03:32:40.223Z",
+    "__v":0 
+  },
+
+  { 
+    "_id":"63d1f91efe7134585e557aa6",
+    "username":"Dave",
+    "roles":["Employee"],
+    "active":true,
+    "createdAt":"2023-01-26T03:53:02.897Z",
+    "updatedAt":"2023-01-26T03:53:02.897Z",
+    "__v":0 
+  },
+
+  { 
+    "_id":"63d75b484c660aa487a1d4e5",
+    "username":"Sammy",
+    "roles":["Employee","Manager","Admin"],
+    "active":true,
+    "createdAt":"2023-01-30T05:53:12.316Z",
+    "updatedAt":"2023-01-30T05:53:12.316Z",
+    "__v":0 
+  },
+
+  { 
+    "_id":"63d75b524c660aa487a1d4e8",
+    "username":"Deam",
+    "roles":["Employee","Manager","Admin"],
+    "active":true,
+    "createdAt":"2023-01-30T05:53:22.694Z",
+    "updatedAt":"2023-01-30T05:53:22.694Z",
+    "__v":0
+  }
+]
+```
+and then export it, so that we can access it from other files. 
 
 ```javascript
 export const usersApi = createApi({
@@ -280,20 +330,34 @@ export default App;
 That archieves the same result. 
 
 
-## VI. Summary 
+## VI. Adding a mutation
+
+
+## VII. Optimistic Updates
+When you're performing an update on some data that already exists in the cache via `useMutation`, RTK Query gives you a few tools to implement an optimistic update. This can be a useful pattern for when you want to give the user the impression that their changes are immediate.
+
+When you wish to perform an update to cache data immediately after a `mutation` is triggered, you can apply an `optimistic update`. This can be a useful pattern for when you want to give the user the impression that their changes are immediate, even while the mutation request is still in flight.
+
+## VIII. Pessimistic Updates
+When you wish to perform an update to cache data based on the response received from the server after a `mutation` is triggered, you can apply a `pessimistic update`. The distinction between a `pessimistic update` and an `optimistic update` is that the `pessimistic update` will instead wait for the response from the server prior to updating the cached data.
+
+
+## IX. Summary 
 There is much more we can do with RTK Query, if you are not Redux fans and alreay use some other fetching libraries in your project. It's probably not worth investing on RTK Query. 
 
 But if you already have redux package installed, RTK Query is in your tool chest, it doesn't hurt to give a try...
 
 
-## VII. Reference
+## X. Reference
 1. [RTK Query Tutorial - How to Fetch Data With Redux Toolkit Query | React Beginners Tutorial](https://youtu.be/-8WEd578fFw)
 2. [React Redux RTK QUERY CRASH COURSE | Build Product Search Functionality](https://youtu.be/7KkNZffq21Y)
 3. [Redux Toolkit | createApi](https://redux-toolkit.js.org/rtk-query/api/createApi)
 5. [Redux Toolkit | createEntityAdapter](https://redux-toolkit.js.org/api/createEntityAdapter)
 6. [Redux Toolkit Setup Tutorial](https://dev.to/raaynaldo/redux-toolkit-setup-tutorial-5fjf)
 7. [RTK Query Tutorial (CRUD)](https://dev.to/raaynaldo/rtk-query-tutorial-crud-51hl)
-8. [Peter Pendulum, The Business Man](https://poemuseum.org/peter-pendulum/)
+8. [RTK Query | Optimistic Updates](https://async-transformresponse--rtk-query-docs.netlify.app/concepts/optimistic-updates/)
+9, [Redux Toolkit | Manual Cache Updates](https://redux-toolkit.js.org/rtk-query/usage/manual-cache-updates)
+10. [Peter Pendulum, The Business Man](https://poemuseum.org/peter-pendulum/)
 
 
 ## Epilogue
