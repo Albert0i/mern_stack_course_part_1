@@ -420,11 +420,13 @@ const onSaveUserClicked = async (e) => {
 
 ## VII. [Optimistic Updates](https://async-transformresponse--rtk-query-docs.netlify.app/concepts/optimistic-updates/)
 When you wish to perform an update to cache data immediately after a `mutation` is triggered, you can apply an `optimistic update`. This can be a useful pattern for when you want to give the user the impression that their changes are immediate, even while the mutation request is still in flight.
+
 (to be continued...)
 
 
 ## VIII. Pessimistic Updates
 When you wish to perform an update to cache data based on the response received from the server after a `mutation` is triggered, you can apply a `pessimistic update`. The distinction between a `pessimistic update` and an `optimistic update` is that the `pessimistic update` will instead wait for the response from the server prior to updating the cached data.
+
 (to be continued...)
 
 
