@@ -6,7 +6,7 @@ const Data = () => {
   const { data:users, isLoading, refetch } = useGetAllUsersQuery()
 
   const [ addNewUser, { isError, error} ] = useAddNewUserMutation()
-    const [username, setUsername] = useState('')
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [roles, setRoles] = useState(["Employee"])
   

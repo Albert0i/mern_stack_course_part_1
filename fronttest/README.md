@@ -337,10 +337,11 @@ export default App;
 That archieves the same result. 
 
 
-## VI. Adding a [mutation](https://redux-toolkit.js.org/rtk-query/usage/mutations)
-> Mutations are used to send data updates to the server and apply the changes to the local cache. Mutations can also invalidate cached data and force re-fetches.
+## VI. [Mutation](https://redux-toolkit.js.org/rtk-query/usage/mutations) and [Automated Re-fetching](https://redux-toolkit.js.org/rtk-query/usage/automated-refetching)
+Mutations are used to send data updates to the server and apply the changes to the local cache. Mutations can also invalidate cached data and force re-fetches.
 
-To add a create new user: 
+- A query can have its cached data provide tags. Doing so determines which 'tag' is attached to the cached data returned by the query.
+- A mutation can invalidate specific cached data based on the tags. Doing so determines which cached data will be either refetched or removed from the cache.
 
 apiSlice4.js
 ```javascript 
@@ -373,8 +374,8 @@ apiSlice4.js
         })
 . . . 
 ```
-- `providesTags` are optional and used only by query endpoints. 
-- Expects an array of tag type strings, an array of objects of tag types with ids, or a function that returns such an array.
+
+`providesTags` (optional) Used by query endpoints and expects an array of tag type strings, an array of objects of tag types with ids, or a function that returns such an array.
 
 1. ['Post'] - equivalent to 2
 2. [{ type: 'Post' }] - equivalent to 1
@@ -383,18 +384,43 @@ apiSlice4.js
 5. (result, error, arg) => [{ type: 'Post' }] - equivalent to 4
 6. (result, error, arg) => [{ type: 'Post', id: 1 }]
 
-To test our app, we need to add form to our `Data` component, so that we can create a new user. 
+`invalidatesTags` (optional) Used by mutation endpoints. Determines which cached data should be either re-fetched or removed from the cache and expects the same shapes as providesTags.
 
+To continue with our app, we add form beneath users list in `Data` component. 
 
 ![alt Data4](https://raw.githubusercontent.com/Albert0i/mern_stack_course_part_1/main/img/Data4.JPG)
 
-As you can see, when we click the `Save` button, we fire up a mutation and create a new user. The status code 201 confirms this fact. In addition, a re-fetch behaviour is triggered since we've invalidate the cache. The new user will be show right away!!! 
+When we click the `Save` button, a mutation is fired up, new user record is create on backend database. The status code 201 confirms this fact. In addition, a re-fetch behaviour is triggered since we've invalidate the cache and new user will be show right away!!! 
+
+- Unlike `useQuery`, `useMutation` returns a tuple. The first item in the tuple is the "trigger" function and the second element contains an object with `status`, `error`, and `data`.
+```javascript
+  const { data:users, isLoading, refetch } = useGetAllUsersQuery()
+
+  const [ addNewUser, { isError, error} ] = useAddNewUserMutation()
+```
+
+- Unlike the `useQuery` hook, the `useMutation` hook doesn't execute automatically. To run a mutation you have to call the trigger function returned as the first tuple value from the hook.
+```javascript
+const onSaveUserClicked = async (e) => {
+      e.preventDefault()
+      try {        
+        await addNewUser({ username, password, roles })
+      }
+      catch (err)
+      {
+        console.log(err)
+      }
+      finally {
+        // force re-fetches the data
+        //refetch()
+      }
+  }
+```
 
 
-## VII. Optimistic Updates
-When you're performing an update on some data that already exists in the cache via `useMutation`, RTK Query gives you a few tools to implement an optimistic update. This can be a useful pattern for when you want to give the user the impression that their changes are immediate.
+## VII. [Optimistic Updates](https://async-transformresponse--rtk-query-docs.netlify.app/concepts/optimistic-updates/)
+When you wish to perform an update to cache data immediately after a mutation is triggered, you can apply an optimistic update. This can be a useful pattern for when you want to give the user the impression that their changes are immediate, even while the mutation request is still in flight.
 
-When you wish to perform an update to cache data immediately after a `mutation` is triggered, you can apply an `optimistic update`. This can be a useful pattern for when you want to give the user the impression that their changes are immediate, even while the mutation request is still in flight.
 
 ## VIII. Pessimistic Updates
 When you wish to perform an update to cache data based on the response received from the server after a `mutation` is triggered, you can apply a `pessimistic update`. The distinction between a `pessimistic update` and an `optimistic update` is that the `pessimistic update` will instead wait for the response from the server prior to updating the cached data.
@@ -409,12 +435,13 @@ But if you already have redux package installed, RTK Query is in your tool chest
 ## X. Reference
 1. [RTK Query Tutorial - How to Fetch Data With Redux Toolkit Query | React Beginners Tutorial](https://youtu.be/-8WEd578fFw)
 2. [React Redux RTK QUERY CRASH COURSE | Build Product Search Functionality](https://youtu.be/7KkNZffq21Y)
-3. [Redux Toolkit | createApi](https://redux-toolkit.js.org/rtk-query/api/createApi)
-5. [Redux Toolkit | createEntityAdapter](https://redux-toolkit.js.org/api/createEntityAdapter)
-6. [Redux Toolkit Setup Tutorial](https://dev.to/raaynaldo/redux-toolkit-setup-tutorial-5fjf)
-7. [RTK Query Tutorial (CRUD)](https://dev.to/raaynaldo/rtk-query-tutorial-crud-51hl)
-8. [RTK Query | Optimistic Updates](https://async-transformresponse--rtk-query-docs.netlify.app/concepts/optimistic-updates/)
-9, [Redux Toolkit | Manual Cache Updates](https://redux-toolkit.js.org/rtk-query/usage/manual-cache-updates)
+3. [React Redux Toolkit with Project | Redux Axios Tutorial | React Redux Tutorial For Beginners - 1](https://youtu.be/EnIRyNT2PMI)
+4. [RTK Query CRUD | Mutations & Auto-Fetching | React Redux Toolkit RTK Query Tutorial - 2](https://youtu.be/3QLpHlmdW_U)
+5. [Redux Toolkit Setup Tutorial](https://dev.to/raaynaldo/redux-toolkit-setup-tutorial-5fjf)
+6. [RTK Query Tutorial (CRUD)](https://dev.to/raaynaldo/rtk-query-tutorial-crud-51hl)
+7. [Redux Toolkit | createApi](https://redux-toolkit.js.org/rtk-query/api/createApi)
+8. [Redux Toolkit | createEntityAdapter](https://redux-toolkit.js.org/api/createEntityAdapter)
+9. [Redux Toolkit | Manual Cache Updates](https://redux-toolkit.js.org/rtk-query/usage/manual-cache-updates)
 10. [Peter Pendulum, The Business Man](https://poemuseum.org/peter-pendulum/)
 
 
@@ -423,5 +450,3 @@ If there is any thing on earth I hate, it is a genius. Your geniuses are all arr
 
 
 ## EOF (2023/02/03)
-
-`providesTags` are used by query endpoints. Determines which 'tag' is attached to the cached data returned by the query. 
