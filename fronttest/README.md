@@ -8,12 +8,12 @@ Edgar Allan Poe</span>
 
 
 ## Prologue
-During the re-studying of [React Redux](https://youtu.be/NqzdVN2tyvQ), I found it extremely abstruse and unfathomable to understand [RTK Query](https://redux-toolkit.js.org/rtk-query/overview). The documentation is cryptic and indigestible for those fresh [React](https://reactjs.org/) developers like me. I crawl and crawl in [**油管**](https://www.youtube.com/), in an effort to find hints and clues and hoping to grasp it in solid, not like those *Castle In The Sand*. 
+During the re-studying of [React Redux](https://youtu.be/NqzdVN2tyvQ), I found it extremely abstruse and unfathomable to understand [RTK Query](https://redux-toolkit.js.org/rtk-query/overview). The documentation is cryptic and indigestible for those fresh [React](https://reactjs.org/) developers like me. I crawl and crawl in [**油管**](https://www.youtube.com/), in an effort to find hints and clues and hope to grasp it in solid, not like those *Castle In The Sand*. 
 
 [MERN](https://youtu.be/CvCiNeLnZ00) is continuing to be an eternally obfuscating topic: 
 
 1. How frontend cooperates with backend  dispersingly over the internet? 
-2. How frontend manages state consistent with backend database? ([optimistic updates](https://stackoverflow.com/questions/33009657/what-is-optimistic-updates-in-front-end-development))
+2. How frontend manages state consistent with backend database? (optimistic vs pessimist updates)
 3. The ever-changing performance and security issues materially presented by [SPA/PWA](https://bsscommerce.com/blog/the-better-option-pwa-vs-spa/#About_PWA), is the last straw that broke the camel's back. 
 
 
@@ -27,15 +27,16 @@ cd fronttest
 npm install @reduxjs/toolkit react-redux
 ```
 
+
 ## II. The basics
-In the world view of Redux, **a slice is really a collection of reducer logic of actions for a single feature in the app**. 
+From the view of Redux, **a slice is really a collection of reducer logic of actions for a single feature in the app**. 
 
 For example, a blog might have a slice for post and another slice for comment to handle the logic of each differently. So they each get their own slice.
 
-Last but not least, habitually... 
-1. Slices are placed in `features` folders; 
-2. [UI](https://en.wikipedia.org/wiki/User_interface) related things are placed in `components` folder; 
-3. Application specific stuffs are placed in `app` folder. 
+As a good practice:  
+1. Slices are placed under `features` folders; 
+2. UI components and related things are placed under `components` folder; 
+3. Application specific stuffs are placed under `app` folder. 
 
 First of all, create `apiSlice.js` and import `createApi` and `fetchBaseQuery` into it. 
 
@@ -110,9 +111,12 @@ export const usersApi = createApi({
 ```
 `reducer path` just like a namespace, so that you can identify it later and we can call it similar to what we call the name of Api. 
 
-Secondly, we need to set a `base URL` for which API we're fetching data. 
+We need to set a `base URL` for which API we're fetching data, ie: 
+```
+http://localhost:3500/
+```
 
-Thirdly, if we want to have multiple queries as well as add, update and delete. Just put everything inside of `endpoints`. An endpoints is where we're actually going to define all the queries/mutations. The above `getAllUsers` is sometimes referred to as `builder function`, 
+Thirdly, if we want to have multiple queries as well as add, update and delete. Just put everything inside of `endpoints`. An endpoints is where we're actually going to define all the queries/mutations. Note that the above `getAllUsers` is sometimes referred to as `builder function`. 
 
 ```javascript
 export const { useGetAllUsersQuery } = usersApi
@@ -122,7 +126,7 @@ Finally, there's a very cool thing that RTK query does, it creates a hook for al
 ```
 'use' + (Name of query/mutation) + 'Query/Mutation' 
 ```
-So, we can just use it with ease in other files wherever we want to fetch the data:  
+Afterwards, we can just use it with ease in other files wherever we want to fetch the data:  
 
 component/Data.js
 ```javascript
@@ -151,7 +155,7 @@ export default Data
 
 Please check [API Slices: React Hooks](https://redux-toolkit.js.org/rtk-query/api/created-api/hooks#usequery) for more. 
 
-Don't forget to provide the Api to our `App`.
+Last but not least, don't forget to provide the Api to your `App`.
 
 App.js
 ```javascript
@@ -175,8 +179,6 @@ export default App;
 ## III. [Customizing queries](https://redux-toolkit.js.org/rtk-query/usage/customizing-queries)
 In some cases, you may want to manipulate the data returned from a query before you put it in the cache. In this instance, you can take advantage of `transformResponse`.
 
-`providesTags` are used by query endpoints. Determines which 'tag' is attached to the cached data returned by the query. 
-
 ```javascript
 . . .
   getAllUsers: builder.query({
@@ -188,9 +190,7 @@ In some cases, you may want to manipulate the data returned from a query before 
             const copy = JSON.parse(JSON.stringify(response))
             // sort by username 
             return copy.sort(compare)
-        },
-
-        providesTags: ['Users']
+        }
     }) 
 . . .
 function compare( a, b ) {
@@ -203,8 +203,11 @@ function compare( a, b ) {
     return 0;
 }
 ```
+In this case, we make a copy of the returned array and sort it by username in alphabetical order and return it to the `Data` component. 
 
 ![alt Data1](https://raw.githubusercontent.com/Albert0i/mern_stack_course_part_1/main/img/Data1.JPG)
+
+Please compare the unsorted and sorted results in console output. 
 
 
 ## IV. [Normalizing Data](https://redux.js.org/tutorials/essentials/part-6-performance-normalization)
@@ -228,6 +231,7 @@ import { createEntityAdapter } from "@reduxjs/toolkit";
 Secondly, Create the adapter, with `SelectId` (optional) and `sortComparer`, and `initialState`.
 
 ```javascript 
+. . . 
 const usersAdapter = createEntityAdapter({
     // Assume IDs are stored in a field other than `user.id`
     selectId: (user) => user._id, 
@@ -236,10 +240,11 @@ const usersAdapter = createEntityAdapter({
   })
 
 const initialState = usersAdapter.getInitialState() 
+. . . 
 ```
 The adapter object has a `getInitialState` function that generates an empty `{ids: [], entities: {}}` object. You can pass in more fields to getInitialState, and those will be merged in.
 
-Fill data into adapter:  
+Fill in the adapter and return the normalized data:  
 ```javascript 
 . . . 
       transformResponse: (response, meta, arg) => {
@@ -249,12 +254,12 @@ Fill data into adapter:
 . . . 
 ```
 
-The return data is an object. 
+That's it! The return data is an object with property `ids` and `entities`. 
 
-components/Data.js
+components/Data3.js
 ```javascript
 import React from 'react'
-import { useGetAllUsersQuery } from '../features/apiSlice'
+import { useGetAllUsersQuery } from '../features/apiSlice3'
 
 const Data = () => {
   const { data:users, isLoading, isError, error } = useGetAllUsersQuery()
@@ -268,7 +273,7 @@ const Data = () => {
   console.log('entities', entities)
   return ( 
     <>
-      <h3>Data</h3>
+      <h3>Data3</h3>
         <ol>
           { ids.map(id => <li key={id}>{ id }</li>)}
         </ol>
@@ -285,9 +290,11 @@ export default Data
 
 ![alt Data3](https://raw.githubusercontent.com/Albert0i/mern_stack_course_part_1/main/img/Data3.JPG)
 
+Please compare the order of `ids` and `entities ` in console output. 
+
 
 ## V. By the store
-if your have already setup your [store](https://redux.js.org/usage/configuring-your-store), just attach the Api to the reducer. In addition, we need to setup the `middleware`, and call `setupListeners` in the last part.
+if your have already setup your [store](https://redux.js.org/usage/configuring-your-store), you can just attach the Api to the reducer. In addition, we need to setup the `middleware`, and call `setupListeners` in the last part.
 
 store.js
 ```javascript
@@ -314,7 +321,7 @@ App.js
 import './App.css';
 import { Provider } from 'react-redux'
 import { store } from './app/store'
-import Data from './components/Data3'
+import Data from './components/Data'
 
 function App() {
   return (
@@ -330,7 +337,58 @@ export default App;
 That archieves the same result. 
 
 
-## VI. Adding a mutation
+## VI. Adding a [mutation](https://redux-toolkit.js.org/rtk-query/usage/mutations)
+> Mutations are used to send data updates to the server and apply the changes to the local cache. Mutations can also invalidate cached data and force re-fetches.
+
+To add a create new user: 
+
+apiSlice4.js
+```javascript 
+. . . 
+        getAllUsers: builder.query({
+            query: () => "users", 
+            
+            // In some cases, you may want to manipulate the data returned from a query 
+            // before you put it in the cache. (optional)
+            transformResponse: (response, meta, arg) => {
+                //console.log('transform', response)
+                return usersAdapter.setAll(initialState, response)
+            },
+
+            // Used by query endpoints. Determines which 'tag' is attached to the cached data // 
+            // returned by the query. (optional)               
+            providesTags: ['User'],
+        }),
+        
+        addNewUser: builder.mutation({
+            query: (body) => ({
+                url: '/users',
+                method: 'POST',
+                body
+            }),
+            // Used by mutation endpoints. 
+            // Determines which cached data should be either re-fetched or 
+            // removed from the cache. Expects the same shapes as providesTags.
+            invalidatesTags: ['User'],
+        })
+. . . 
+```
+- `providesTags` are optional and used only by query endpoints. 
+- Expects an array of tag type strings, an array of objects of tag types with ids, or a function that returns such an array.
+
+1. ['Post'] - equivalent to 2
+2. [{ type: 'Post' }] - equivalent to 1
+3. [{ type: 'Post', id: 1 }]
+4. (result, error, arg) => ['Post'] - equivalent to 5
+5. (result, error, arg) => [{ type: 'Post' }] - equivalent to 4
+6. (result, error, arg) => [{ type: 'Post', id: 1 }]
+
+To test our app, we need to add form to our `Data` component, so that we can create a new user. 
+
+
+![alt Data4](https://raw.githubusercontent.com/Albert0i/mern_stack_course_part_1/main/img/Data4.JPG)
+
+As you can see, when we click the `Save` button, we fire up a mutation and create a new user. The status code 201 confirms this fact. In addition, a re-fetch behaviour is triggered since we've invalidate the cache. The new user will be show right away!!! 
 
 
 ## VII. Optimistic Updates
@@ -366,3 +424,4 @@ If there is any thing on earth I hate, it is a genius. Your geniuses are all arr
 
 ## EOF (2023/02/03)
 
+`providesTags` are used by query endpoints. Determines which 'tag' is attached to the cached data returned by the query. 

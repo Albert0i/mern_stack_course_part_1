@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { usersApi } from '../features/apiSlice3';
+import { usersApi } from '../features/apiSlice4';
 import { setupListeners } from '@reduxjs/toolkit/query';
 
 export const store = configureStore({
@@ -7,7 +7,7 @@ export const store = configureStore({
         [usersApi.reducerPath]: usersApi.reducer
     },
     middleware: getDefaultMiddleware =>
-        getDefaultMiddleware().concat(usersApi.middleware),
+        getDefaultMiddleware().concat(usersApi.middleware),    
     devTools: true
 })
 

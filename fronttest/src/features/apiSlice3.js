@@ -31,9 +31,6 @@ export const usersApi = createApi({
                     return usersAdapter.setAll(initialState, response)
                },
 
-               // Used by query endpoints. Determines which 'tag' is attached to the cached data // 
-               // returned by the query. (optional)
-               providesTags: ['Users']
             })
         })
     })
@@ -46,12 +43,6 @@ export const { useGetAllUsersQuery } = usersApi
 
    RTK Query Tutorial - How to Fetch Data With Redux Toolkit Query | React Beginners Tutorial
    https://youtu.be/-8WEd578fFw
-
-   Sort array of objects by string property value
-   https://stackoverflow.com/questions/1129216/sort-array-of-objects-by-string-property-value
-
-   Clone An Object In JavaScript: 4 Best Ways [Examples]
-   https://www.codingem.com/javascript-clone-object/
 
    createEntityAdapter
    https://redux-toolkit.js.org/api/createEntityAdapter

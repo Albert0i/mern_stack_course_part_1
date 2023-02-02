@@ -23,10 +23,7 @@ export const usersApi = createApi({
                     // sort by username 
                     return copy.sort(compare)
                },
-
-               // Used by query endpoints. Determines which 'tag' is attached to the cached data // 
-               // returned by the query. (optional)
-               providesTags: ['Users']
+               
             })
         })
     })
