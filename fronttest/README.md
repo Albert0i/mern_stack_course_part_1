@@ -393,7 +393,7 @@ To continue with our app, we add form beneath users list in `Data` component.
 
 ![alt Data4](https://raw.githubusercontent.com/Albert0i/mern_stack_course_part_1/main/img/Data4.JPG)
 
-When we click the `Save` button, a mutation is fired up, new user record is create on backend database. The status code 201 confirms this fact. In addition, a re-fetch behaviour is triggered since we've invalidate the cache and new user will be show right away!!! 
+When we click the `Save` button, a mutation is fired up, new user record is create on backend database. The status code 201 confirms this fact. In addition, a re-fetch behaviour is triggered since we've invalidate the cache and new user will be shown right away!!! 
 
 - Unlike `useQuery`, `useMutation` returns a tuple. The first item in the tuple is the "trigger" function and the second element contains an object with `status`, `error`, and `data`.
 ```javascript
