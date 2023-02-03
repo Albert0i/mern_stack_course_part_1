@@ -3,7 +3,7 @@ import { useGetAllUsersQuery, useAddNewUserMutation } from '../features/apiSlice
 import { useState } from "react"
 
 const Data = () => {
-  const { data:users, isLoading, refetch } = useGetAllUsersQuery()
+  const { data:users, isLoading, refetch } = useGetAllUsersQuery('', { pollingInterval: 5000} )
 
   const [ addNewUser, { isError, error} ] = useAddNewUserMutation()
   const [username, setUsername] = useState('')

@@ -1,5 +1,8 @@
 # "The ABC of RTK Query"
 
+[![alt The Business Man](https://raw.githubusercontent.com/Albert0i/mern_stack_course_part_1/main/img/Times-1837.jpg)](https://storyoftheweek.loa.org/2022/11/the-business-man.html)
+
+
 <div style="text-align: right">
 <code>Method is the thing, after all.</code><br />
 <span style="font-size: small">Peter Pendulum, The Business Man<br />
@@ -417,6 +420,18 @@ const onSaveUserClicked = async (e) => {
   }
 ```
 
+On the contrary, if you want the re-fetch happen on a regular base, ie. on every five second, users list will be pulled from the backend. To enable [polling](https://redux-toolkit.js.org/rtk-query/usage/polling) for a query, pass a `pollingInterval` to the `useQuery` hook or action creator with an interval in milliseconds.
+
+```javascript
+const { data:users, isLoading, refetch } = useGetAllUsersQuery('', { pollingInterval: 5000} )
+```
+
+![alt Pooling](https://raw.githubusercontent.com/Albert0i/mern_stack_course_part_1/main/img/Pooling.JPG)
+
+To achieve complete granular control over re-fetching data, calling the `refetch` function will *force* refetch the associated query. 
+
+Please check [Cache Behavior](https://redux-toolkit.js.org/rtk-query/usage/cache-behavior#re-fetching-on-demand-with-refetchinitiate) for more. 
+
 
 ## VII. [Optimistic Updates](https://async-transformresponse--rtk-query-docs.netlify.app/concepts/optimistic-updates/)
 When you wish to perform an update to cache data immediately after a `mutation` is triggered, you can apply an `optimistic update`. This can be a useful pattern for when you want to give the user the impression that their changes are immediate, even while the mutation request is still in flight.
@@ -431,7 +446,7 @@ When you wish to perform an update to cache data based on the response received 
 
 
 ## IX. Summary 
-There is much more we can do with RTK Query, if you are not Redux fans and alreay use some other fetching libraries in your project. It's probably not worth investing on RTK Query. 
+There is much more we can do with RTK Query, and even much much more we can control the fetch behaviour. if you are not Redux fans and alreay use some other fetching libraries in your project. It's probably not worth investing on RTK Query. 
 
 But if you already have redux package installed, RTK Query is in your tool chest, it doesn't hurt to give a try...
 
