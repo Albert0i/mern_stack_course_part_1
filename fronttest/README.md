@@ -426,7 +426,7 @@ On the contrary, if you want the re-fetch happen on a regular base, ie. on every
 const { data:users, isLoading, refetch } = useGetAllUsersQuery('', { pollingInterval: 5000} )
 ```
 
-![alt Pooling](https://raw.githubusercontent.com/Albert0i/mern_stack_course_part_1/main/img/Pooling.JPG)
+![alt Pooling](https://raw.githubusercontent.com/Albert0i/mern_stack_course_part_1/main/img/Polling.JPG)
 
 To achieve complete granular control over re-fetching data, calling the `refetch` function will *force* refetch the associated query. 
 
