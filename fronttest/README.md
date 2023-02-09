@@ -38,7 +38,7 @@ For example, a blog might have a slice for post and another slice for comment to
 
 As a good practice:  
 1. Slices are placed under `features` folders; 
-2. UI components and related things are placed under `components` folder; 
+2. Components (always start with capital letter) and other UI related things are placed under `components` folder; 
 3. Application specific stuffs are placed under `app` folder. 
 
 First of all, create `apiSlice.js` and import `createApi` and `fetchBaseQuery` into it. 
@@ -393,7 +393,7 @@ To continue with our app, we add form beneath users list in `Data` component.
 
 ![alt Data4](https://raw.githubusercontent.com/Albert0i/mern_stack_course_part_1/main/img/Data4.JPG)
 
-When we click the `Save` button, a mutation is fired up, new user record is create on backend database. The status code 201 confirms this fact. In addition, a re-fetch behaviour is triggered since we've invalidate the cache and new user will be shown right away!!! 
+When we click the `Save` button, a mutation is fired up, new user record is create on backend database. The status code 201 confirms this fact. In addition, a re-fetch behaviour is triggered since we've invalidated the cache and new user will be shown right away!!! 
 
 - Unlike `useQuery`, `useMutation` returns a tuple. The first item in the tuple is the "trigger" function and the second element contains an object with `status`, `error`, and `data`.
 ```javascript
@@ -468,4 +468,4 @@ But if you already have redux package installed, RTK Query is in your tool chest
 If there is any thing on earth I hate, it is a genius. Your geniuses are all arrant asses — the greater the genius the greater the ass — and to this rule there is no exception whatever. 
 
 
-## EOF (2023/02/03)
+## EOF (2023/02/09)
