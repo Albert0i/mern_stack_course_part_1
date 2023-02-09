@@ -38,7 +38,7 @@ For example, a blog might have a slice for post and another slice for comment to
 
 As a good practice:  
 1. Slices are placed under `features` folders; 
-2. Components (always start with capital letter) and other UI related things are placed under `components` folder; 
+2. Components, which always start with capital letter, are placed under `components` folder; 
 3. Application specific stuffs are placed under `app` folder. 
 
 First of all, create `apiSlice.js` and import `createApi` and `fetchBaseQuery` into it. 
