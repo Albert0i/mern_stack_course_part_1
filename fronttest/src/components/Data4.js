@@ -1,4 +1,5 @@
 import React from 'react'
+import { Button, List, Form, Message, Label, Input, Container, Header, Divider } from 'semantic-ui-react'
 import { useGetAllUsersQuery, useAddNewUserMutation } from '../features/apiSlice4'
 import { useState } from "react"
 
@@ -56,32 +57,42 @@ const Data = () => {
   //console.log('ids', ids)
   //console.log('entities', entities)
   return ( 
-    <>
-      <h3>Data</h3>
-        <ol>
-          { ids.map(id => <li key={id}>{ id }</li>)}
-        </ol>
-        <hr />
-        <ol>
-        { ids.map(id => <li key={id}>{ entities[id].username }</li>)}
-        </ol>        
-        <hr />
+    <Container>
+      <Header>Data</Header>
+        <Divider />
+        <List bulleted>
+          { ids.map(id => <List.Item key={id}>{ id }</List.Item>)}
+        </List>
 
-        <form className="form" onSubmit={onSaveUserClicked}>
-          <div>
-            <label htmlFor="username">Username: </label>
-            <input id="username" name="username" type="text" value={username}
+        <Divider />
+        <List bulleted size="big">
+        { ids.map(id => <List.Item key={id}>{ entities[id].username }</List.Item>)}
+        </List>        
+        <Divider />
+
+        { error ? 
+          <Message color="red" size="big"> { JSON.stringify(error, undefined, 2) } </Message> : 
+          ''
+        }
+
+        <Form className="form" onSubmit={onSaveUserClicked}>
+          <Header>Add New</Header>
+          <Form.Field>
+            <Label htmlFor="username">Username: </Label>
+            <Input id="username" name="username" type="text" value={username}
                 onChange={onUsernameChanged}
             />
-          </div>
-          <div>
-            <label htmlFor="password">Password: </label>
-            <input id="password" name="password" type="password" value={password}
+          </Form.Field>
+
+          <Form.Field>
+            <Label htmlFor="password">Password: </Label>
+            <Input id="password" name="password" type="password" value={password}
                 onChange={onPasswordChanged}
             />
-          </div>    
-          <div>
-            <label htmlFor="roles">Assigned roles:</label>
+          </Form.Field>    
+
+          <Form.Field>
+            <Label htmlFor="roles">Assigned roles:</Label>
             <select
                 id="roles"
                 name="roles"
@@ -92,16 +103,14 @@ const Data = () => {
             >
                 {options}
           </select>
-          </div>      
-          <div>
-            <button type="submit">Save</ button>
-          </div>
-          <div>
-            { JSON.stringify(error) }
-          </div>
+          </Form.Field>    
 
-        </form>
-    </>   
+          <Form.Field>
+            <Button type="submit" primary>Save</ Button>
+          </Form.Field>
+
+        </Form>
+    </Container>   
   )
 }
 

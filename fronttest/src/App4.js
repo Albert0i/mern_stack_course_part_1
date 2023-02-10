@@ -1,4 +1,4 @@
-import './App.css';
+import 'semantic-ui-css/semantic.min.css'
 import { Provider } from 'react-redux'
 import { store } from './app/store'
 import Data from './components/Data4'
