@@ -16,14 +16,14 @@ The back end for the MERN stack is a [REST](https://restfulapi.net/) API, a REST
 
 ## I. Repertoire
 ```
-Chapter 1: MERN Stack Project
-Chapter 2: Middleware
-Chapter 3: MongoDB
-Chapter 4: Controllers
+(00:00:42) Chapter 1: MERN Stack Project
+(00:28:13) Chapter 2: Middleware
+(00:56:04) Chapter 3: MongoDB
+(01:24:59) Chapter 4: Controllers
 
-Chapter 5: React JS
-Chapter 6: Redux & RTK Query
-Chapter 7: React & Redux Forms
+(02:08:14) Chapter 5: React JS
+(02:42:15) Chapter 6: Redux & RTK Query
+(03:16:54) Chapter 7: React & Redux Forms
 ```
 
 
